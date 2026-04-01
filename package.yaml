@@ -1,5 +1,5 @@
 name:                clash-shake
-version:             0.4.0
+version:             0.4.1
 category:            Hardware, Shake
 synopsis:            Shake rules for building Clash programs
 description: |
@@ -49,3 +49,4 @@ extra-source-files:
   - template/xilinx-vivado/project.tcl.mustache
   - template/xilinx-vivado/upload.tcl.mustache
   - template/intel-quartus/project.tcl.mustache
+  - template/gowin-ide/project.tcl.mustache

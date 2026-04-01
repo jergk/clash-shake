@@ -1,0 +1,47 @@
+#create project
+create_project -name {{project}} -dir {{outDir}} -pn {{pn}} -device_version {{version}} -force
+
+#add files
+
+{{#srcs}}
+try {add_file -type {{fileType}} "{{filePath}}"} trap {} {} {puts "failed to add file: {{filePath}}"}
+{{/srcs}}
+
+# run other tcls
+{{#tcls}}
+source "{{filePath}}"
+{{/tcls}}
+
+# add ips
+{{#ipcs}}
+ try {
+    read_ipc "{{filePath}}"
+    generate_target [get_ips {{name}}]
+} trap {} {} {puts "failed to read & generate ipc: {{filePath}}"}
+{{/ipcs}}
+
+##########Global Configuration##########
+
+##########Global Configuration##########
+#set output base name
+set_option -output_base_name {{top}}
+##########Synthesis Configuration########
+#set synthesis tool
+set_option -synthesis_tool gowinsynthesis
+#set top module
+set_option -top_module {{top}}
+#set verilog language
+set_option -verilog_std v2001
+#set ram r/w check
+set_option -rw_check_on_ram 1
+##########Place & Route Configuration#########
+#set generate sdf file
+set_option -gen_sdf 1
+#set generate post-place file
+set_option -gen_posp 1
+#set generate post-pnr verilog simulation model file
+set_option -gen_verilog_sim_netlist 1
+#set place output registers to IOB
+set_option -oreg_in_iob 0
+##########################################
+run close
